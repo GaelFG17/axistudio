@@ -1,0 +1,18 @@
+version: '3.4'
+
+services:
+  db:
+    image: mariadb:11.2-jamm
+    container_name: mariadb
+    volumes:
+      - ./mariadb:/var/lib/mysql:Z
+   
+  
+    ports:
+      - "3307:3306"
+
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: myappdb
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
