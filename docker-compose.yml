@@ -1,18 +1,25 @@
-version: '3.4'
-
 services:
-  db:
-    image: mariadb:11.2-jamm
-    container_name: mariadb
-    volumes:
-      - ./mariadb:/var/lib/mysql:Z
-   
-  
+  spring-app:
+    image: my-spring-app
+    build:
+      context: .
     ports:
-      - "3307:3306"
-
+      - "8080:8080"
     environment:
-      MYSQL_ROOT_PASSWORD: root_password
-      MYSQL_DATABASE: myappdb
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      - SPRING_DATASOURCE_URL=jdbc:mariadb://db:3306/mydatabase
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=example
+    depends_on:
+      - db
+
+  db:
+    image: mariadb:10.6
+    environment:
+      - MYSQL_ROOT_PASSWORD=example
+      - MYSQL_DATABASE=mydatabase
+    volumes:
+      - mariadb-data:/var/lib/mysql
+      - ./init:/docker-entrypoint-initdb.d
+    
+volumes:
+  mariadb-data:
