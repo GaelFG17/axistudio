@@ -24,4 +24,4 @@ COPY --from=build /app/target/costumer-0.0.1-SNAPSHOT.jar /app/costumer-0.0.1-SN
 ENTRYPOINT ["java", "-jar", "/app/costumer-0.0.1-SNAPSHOT.jar"]
 
 # Exponer el puerto en el que se ejecutará el servicio
-EXPOSE 8080
+EXPOSE 808
