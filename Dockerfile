@@ -1,5 +1,5 @@
 # Usar una imagen base de Maven con Java 11 preinstalado (o la versión que necesites)
-FROM maven:3.9.4-openjdk-21 AS build
+FROM maven:3.9.4 AS build
 
 # Configurar el directorio de trabajo dentro del contenedor
 WORKDIR /app
