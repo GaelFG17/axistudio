@@ -1,0 +1,66 @@
+/* Estilo general para el contenedor del login */
+.container {
+    background: linear-gradient(135deg, #6a82fb, #fc5c7d);
+  }
+  
+  /* Estilo para el nombre de la empresa con fuente cursiva y estilizada */
+  .company-name {
+    font-family: 'Brush Script MT', cursive;
+    color: #0c0c0c;
+    font-size: 40px; /* Tamaño mayor para destacar */
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 5px rgba(62, 26, 178, 0.3); /* Añadí un sombreado sutil */
+    margin-top: 20px;
+  }
+  
+  /* Estilo del card */
+  .card {
+    background-color: #ffffff;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    padding: 20px;
+  }
+  
+  /* Estilo para los campos de entrada */
+  .form-label {
+    font-weight: 500;
+    color: #333;
+  }
+  
+  .form-control {
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    padding: 12px;
+  }
+  
+  /* Estilo para el botón */
+  .btn-primary {
+    background-color: #6a82fb;
+    border-color: #6a82fb;
+    border-radius: 10px;
+    font-weight: bold;
+    padding: 12px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-primary:hover {
+    background-color: #fc5c7d;
+    border-color: #fc5c7d;
+  }
+  
+  .btn-primary:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(106, 130, 251, 0.7);
+  }
+  
+  /* Estilo para el mensaje de error */
+  .text-danger {
+    font-size: 14px;
+    font-weight: 500;
+    color: #ff4d4d;
+  }
+  
