@@ -1,0 +1,47 @@
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card shadow-lg p-4" style="width: 400px; border-radius: 15px;">
+      
+      <!-- Logo de Axi Studio (comentado para no mostrar la imagen) -->
+      <!-- <div class="text-center mb-4">
+        <img src="assets/axi-studio-logo.png" alt="Axi Studio" class="logo" />
+      </div> -->
+      
+      <!-- Nombre de la empresa con estilo cursivo -->
+      <h3 class="text-center mb-3 company-name">Axi Studio</h3>
+      
+      <!-- Formulario de login -->
+      <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+        <div class="mb-3">
+          <label for="username" class="form-label">Usuario</label>
+          <input 
+            type="text" 
+            id="username" 
+            name="username" 
+            [(ngModel)]="username" 
+            class="form-control" 
+            required
+          />
+        </div>
+        
+        <div class="mb-3">
+          <label for="password" class="form-label">Contraseña</label>
+          <input 
+            type="password" 
+            id="password" 
+            name="password" 
+            [(ngModel)]="password" 
+            class="form-control" 
+            required
+          />
+        </div>
+        
+        <button type="submit" class="btn btn-primary w-100" [disabled]="!loginForm.valid">
+          Iniciar sesión
+        </button>
+      </form>
+    
+      <!-- Mensaje de error -->
+      <p *ngIf="errorMessage" class="text-danger text-center mt-3">{{ errorMessage }}</p>
+    </div>
+  </div>
+  
