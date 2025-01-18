@@ -1,0 +1,36 @@
+services:
+  login-front:
+    build:
+      context: ./login-front
+      dockerfile: Dockerfile
+    ports:
+      - "4200:80" # Mapea el puerto 4200 del host al puerto 80 del contenedor
+    environment:
+      - PORT=4200 # Variable de entorno para reflejar el puerto expuesto
+    volumes:
+      - ./login-front:/app # Sincroniza la carpeta de Angular en desarrollo (opcional)
+
+  axislogin-back:
+    build:
+      context: ./axislogin-back
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080" # Spring Boot corre en el puerto 8080
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mariadb://db:3306/mydatabase
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=example
+    depends_on:
+      - db
+
+  db:
+    image: mariadb:10.6
+    environment:
+      - MYSQL_ROOT_PASSWORD=example
+      - MYSQL_DATABASE=mydatabase
+    volumes:
+      - mariadb-data:/var/lib/mysql
+      - ./init:/docker-entrypoint-initdb.d
+
+volumes:
+  mariadb-data:
