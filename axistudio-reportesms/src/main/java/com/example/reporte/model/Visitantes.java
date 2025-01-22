@@ -14,11 +14,16 @@ public class Visitantes {
 
     @Id
     private String clvVisitantes;
+    
+    @Column(name = "Nombre_v", nullable = false, length = 40)
+    private String nombre;
+    
+    @Column(name = "Ap1_v", nullable = false, length = 40)
+    private String ap1;
 
-    @ManyToOne
-    @JoinColumn(name = "clv_persona", nullable = false)
-    private persona persona;
-
+    @Column(name = "Ap2_v", nullable = false, length = 40)
+    private String ap2;
+    
     @ManyToOne
     @JoinColumn(name = "id_rol", nullable = false)
     private Rol rol;

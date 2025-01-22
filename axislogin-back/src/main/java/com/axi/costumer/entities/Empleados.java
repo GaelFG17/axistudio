@@ -26,10 +26,16 @@ public class Empleados {
     @Id
     @Column(name = "clv_Empleados", length = 5, nullable = false)
     private String clvEmpleados;
+    
+    
+    @Column(name = "Nombre", nullable = false, length = 40)
+    private String nombre;
+    
+    @Column(name = "Ap1", nullable = false, length = 40)
+    private String ap1;
 
-    @ManyToOne
-    @JoinColumn(name = "clv_persona", nullable = false) // FK hacia la tabla "persona"
-    private Persona persona;
+    @Column(name = "Ap2", nullable = false, length = 40)
+    private String ap2;
 
     @ManyToOne
     @JoinColumn(name = "id_rol", nullable = false) // FK hacia la tabla "rol"
@@ -57,14 +63,6 @@ public class Empleados {
 
     public void setClvEmpleados(String clvEmpleados) {
         this.clvEmpleados = clvEmpleados;
-    }
-
-    public Persona getPersona() {
-        return persona;
-    }
-
-    public void setPersona(Persona persona) {
-        this.persona = persona;
     }
 
     public Rol getRol() {
@@ -125,6 +123,30 @@ public class Empleados {
 
     @Column(name = "password", length = 90, nullable = false)
     private String password;
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getAp1() {
+        return ap1;
+    }
+
+    public void setAp1(String ap1) {
+        this.ap1 = ap1;
+    }
+
+    public String getAp2() {
+        return ap2;
+    }
+
+    public void setAp2(String ap2) {
+        this.ap2 = ap2;
+    }
     
     
 }

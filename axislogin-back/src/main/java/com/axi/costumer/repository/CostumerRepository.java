@@ -14,4 +14,5 @@ import java.util.Optional;
  */
 public interface CostumerRepository extends JpaRepository<Empleados, Long> {
     Optional<Empleados> findByEmail(String email);
+    boolean existsByClvEmpleados(String clvEmpleados);
 }

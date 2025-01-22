@@ -10,7 +10,6 @@ import lombok.Data;
  * @author gaelfranco
  */
 
-@Data
 @Entity
 @Table(name = "area")
 public class Area {
@@ -28,4 +27,39 @@ public class Area {
 
     @Column(name = "estatus", length = 1, nullable = false)
     private char estatus;
+
+    public int getIdArea() {
+        return idArea;
+    }
+
+    public void setIdArea(int idArea) {
+        this.idArea = idArea;
+    }
+
+    public String getNombreArea() {
+        return nombreArea;
+    }
+
+    public void setNombreArea(String nombreArea) {
+        this.nombreArea = nombreArea;
+    }
+
+    public String getDescripcionArea() {
+        return descripcionArea;
+    }
+
+    public void setDescripcionArea(String descripcionArea) {
+        this.descripcionArea = descripcionArea;
+    }
+
+    public char getEstatus() {
+        return estatus;
+    }
+
+    public void setEstatus(char estatus) {
+        this.estatus = estatus;
+    }
+    
+    
+    
 }

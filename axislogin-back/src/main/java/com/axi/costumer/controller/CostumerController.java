@@ -8,8 +8,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import com.axi.costumer.config.AESUtil;
+import com.axi.costumer.entities.Area;
+import com.axi.costumer.entities.Rol;
+import com.axi.costumer.repository.AreaRepository;
+import com.axi.costumer.repository.RolRepository;
 
 import java.util.Optional;
+import org.springframework.context.annotation.Role;
 
 @RestController
 @RequestMapping("/customer")
@@ -21,6 +26,12 @@ public class CostumerController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+    
+    @Autowired
+    private AreaRepository areaRepository; // Inyectar AreaRepository
+
+    @Autowired
+    private RolRepository rolRepository; // Inyectar RoleRepository
 
 
     @PostMapping("/login")
@@ -46,17 +57,45 @@ public class CostumerController {
     }
     
     @PostMapping("/register")
-    public ResponseEntity<?> registerEmployee(@RequestBody Empleados newEmployee) {
+    public ResponseEntity<?> registerEmployee(@RequestBody RegisterEmployeeDTO newEmployeeDTO) {
         try {
             // Verificar si el email ya está en uso
-            Optional<Empleados> existingEmployee = costumerRepository.findByEmail(newEmployee.getEmail());
-            if (existingEmployee.isPresent()) {
+            if (costumerRepository.findByEmail(newEmployeeDTO.getEmail()).isPresent()) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El correo ya está registrado.");
             }
 
-            // Encriptar la contraseña antes de guardar
-            String encryptedPassword = passwordEncoder.encode(newEmployee.getPassword());
+            // Verificar si la clave del empleado ya existe
+            if (costumerRepository.existsByClvEmpleados(newEmployeeDTO.getClvEmpleados())) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El ID del empleado ya existe.");
+            }
+
+            // Buscar el área y rol por sus nombres
+            Optional<Area> optionalArea = areaRepository.findByNombreArea(newEmployeeDTO.getNombreArea());
+            Optional<Rol> optionalRole = rolRepository.findByNombreRol(newEmployeeDTO.getNombreRol());
+
+            if (optionalArea.isEmpty() || optionalRole.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Área o rol no encontrados.");
+            }
+
+            // Crear el objeto Empleados
+            Empleados newEmployee = new Empleados();
+            newEmployee.setClvEmpleados(newEmployeeDTO.getClvEmpleados()); // Asignar manualmente la clave primaria
+            newEmployee.setNombre(newEmployeeDTO.getNombre());
+            newEmployee.setAp1(newEmployeeDTO.getAp1());
+            newEmployee.setAp2(newEmployeeDTO.getAp2());
+            newEmployee.setEstatus(newEmployeeDTO.getEstatus().charAt(0));
+            newEmployee.setHoraEntrada(newEmployeeDTO.getHoraEntrada());
+            newEmployee.setHoraSalida(newEmployeeDTO.getHoraSalida());
+            newEmployee.setEmail(newEmployeeDTO.getEmail());
+
+            // Desencriptar y encriptar la contraseña
+            String decryptedPassword = AESUtil.decrypt(newEmployeeDTO.getPassword());
+            String encryptedPassword = passwordEncoder.encode(decryptedPassword);
             newEmployee.setPassword(encryptedPassword);
+
+            // Asignar el área y el rol
+            newEmployee.setArea(optionalArea.get());
+            newEmployee.setRol(optionalRole.get());
 
             // Guardar el nuevo empleado
             costumerRepository.save(newEmployee);
@@ -67,7 +106,5 @@ public class CostumerController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al registrar el empleado.");
         }
     }
-
-
 
 }

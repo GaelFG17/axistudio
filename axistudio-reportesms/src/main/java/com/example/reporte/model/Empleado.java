@@ -15,11 +15,16 @@ public class Empleado {
     @Id
     @Column(name = "clv_empleados", nullable = false, length = 15)
     private String clvEmpleados;
+    
+    @Column(name = "Nombre", nullable = false, length = 40)
+    private String nombre;
+    
+    @Column(name = "Ap1", nullable = false, length = 40)
+    private String ap1;
 
-    @ManyToOne
-    @JoinColumn(name = "clv_persona", nullable = false)
-    private persona persona; // Cambié la clase a "Persona" (con mayúscula)
-
+    @Column(name = "Ap2", nullable = false, length = 40)
+    private String ap2;
+    
     @ManyToOne
     @JoinColumn(name = "id_rol", nullable = false)
     private Rol rol;

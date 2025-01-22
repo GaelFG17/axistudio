@@ -19,10 +19,15 @@ public class Visitantes {
     @Id
     @Column(name = "clv_Visitantes", length = 5, nullable = false)
     private String clvVisitantes;
+    
+    @Column(name = "Nombre_v", nullable = false, length = 40)
+    private String nombre;
+    
+    @Column(name = "Ap1_v", nullable = false, length = 40)
+    private String ap1;
 
-    @ManyToOne
-    @JoinColumn(name = "clv_persona", nullable = false) // FK hacia Persona
-    private Persona persona;
+    @Column(name = "Ap2_v", nullable = false, length = 40)
+    private String ap2;
 
     @ManyToOne
     @JoinColumn(name = "id_rol", nullable = false) // FK hacia Rol
