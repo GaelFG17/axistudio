@@ -1,14 +1,10 @@
 services:
-  login-front:
+  front:
     build:
-      context: ./login-front
+      context: ./front
       dockerfile: Dockerfile
     ports:
       - "4200:80" # Mapea el puerto 4200 del host al puerto 80 del contenedor
-    environment:
-      - PORT=4200 # Variable de entorno para reflejar el puerto expuesto
-    volumes:
-      - ./login-front:/app # Sincroniza la carpeta de Angular en desarrollo (opcional)
 
   axislogin-back:
     build:
@@ -16,6 +12,19 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:8080" # Spring Boot corre en el puerto 8080
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mariadb://db:3306/mydatabase
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=example
+    depends_on:
+      - db
+
+  axisrepo-back:
+    build:
+      context: ./axistudio-reportesms
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8080" # Spring Boot corre en el puerto 8080
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mariadb://db:3306/mydatabase
       - SPRING_DATASOURCE_USERNAME=root
@@ -31,6 +40,9 @@ services:
     volumes:
       - mariadb-data:/var/lib/mysql
       - ./init:/docker-entrypoint-initdb.d
+    ports:
+      - "3306:3306" # Expone el puerto 3306 para acceso remoto
+    command: --bind-address=0.0.0.0 
 
 volumes:
   mariadb-data:

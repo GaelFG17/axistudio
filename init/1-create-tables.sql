@@ -1,5 +1,5 @@
 CREATE TABLE persona(
-    clv_persona VARCHAR(5) NOT NULL,
+    clv_persona VARCHAR(15) NOT NULL,
     nombre_persona VARCHAR(20) NOT NULL,
     apellido_paterno VARCHAR(50) NOT NULL,
     apellido_materno VARCHAR(50) NOT NULL,
@@ -10,13 +10,13 @@ CREATE TABLE persona(
 
 );
 
----- Tabla de roles -----
-CREATE TABLE rol (
-    id_rol INT NOT NULL AUTO_INCREMENT,
-    nombre_rol VARCHAR(20) NOT NULL,
-    descripcion_rol VARCHAR(50) NOT NULL,
-    estatus CHAR(1) DEFAULT '1',
-    PRIMARY KEY(id_rol)
+---- Tabla de qr -----
+CREATE TABLE codigosqr (
+    id_qr INT NOT NULL AUTO_INCREMENT,
+    email VARCHAR(50) NOT NULL,
+    qrpath VARCHAR(50) NOT NULL,
+    hora_entrada DATETIME, NOT NULL,
+    PRIMARY KEY(id_qr)
 );
 
 ---- Tabla de Area -----
@@ -48,8 +48,8 @@ CREATE TABLE visitantes(
 
 ---- Tabla de Empleados-----
 CREATE TABLE empleados(
-    clv_Empleados VARCHAR(5) NOT NULL,
-    clv_persona VARCHAR(5) NOT NULL,
+    clv_Empleados VARCHAR(15) NOT NULL,
+    clv_persona VARCHAR(15) NOT NULL,
     id_rol INT NOT NULL,
     id_area INT NOT NULL,
     estatus CHAR(1) DEFAULT '0',

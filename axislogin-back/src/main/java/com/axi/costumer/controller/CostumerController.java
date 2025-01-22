@@ -44,6 +44,30 @@ public class CostumerController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error procesando la solicitud");
         }
     }
+    
+    @PostMapping("/register")
+    public ResponseEntity<?> registerEmployee(@RequestBody Empleados newEmployee) {
+        try {
+            // Verificar si el email ya está en uso
+            Optional<Empleados> existingEmployee = costumerRepository.findByEmail(newEmployee.getEmail());
+            if (existingEmployee.isPresent()) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El correo ya está registrado.");
+            }
+
+            // Encriptar la contraseña antes de guardar
+            String encryptedPassword = passwordEncoder.encode(newEmployee.getPassword());
+            newEmployee.setPassword(encryptedPassword);
+
+            // Guardar el nuevo empleado
+            costumerRepository.save(newEmployee);
+
+            return ResponseEntity.status(HttpStatus.CREATED).body("Empleado registrado exitosamente.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al registrar el empleado.");
+        }
+    }
+
 
 
 }
